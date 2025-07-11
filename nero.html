@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Starý Sumer</title>
+  <title>Pronásledování křesťanů za Nerona</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     #textBox { font-size: 16px; }
@@ -21,13 +21,13 @@
     }
   </style>
 </head>
-<body class="bg-yellow-100 flex flex-col items-center justify-center min-h-screen p-6 relative overflow-hidden">
+<body class="bg-yellow-50 flex flex-col items-center justify-center min-h-screen p-6 relative overflow-hidden">
   <select id="voiceSelect" class="px-4 py-2 rounded-lg border border-gray-300 shadow">
     <option>Načítám hlasy...</option>
   </select>
 
-  <h1 class="text-3xl font-bold mb-4">Starý Sumer</h1>
-  <img id="imageTrigger" src="images/sumer.png" alt="Starý Sumer" class="w-full max-w-md rounded-2xl shadow-lg mb-6 cursor-pointer" />
+  <h1 class="text-3xl font-bold mb-4">Pronásledování křesťanů za Nerona</h1>
+  <img id="imageTrigger" src="images/46.png" alt="Nero a mučedníci" class="w-full max-w-md rounded-2xl shadow-lg mb-6 cursor-pointer" />
   <div id="textBox" class="bg-white p-4 rounded-xl shadow max-w-2xl text-center font-semibold text-gray-800 mb-4 hidden"></div>
   <div class="flex gap-4 mb-4">
     <button id="toggleRead" class="bg-green-600 text-white px-6 py-3 rounded-2xl shadow hover:bg-green-700 transition">
@@ -39,11 +39,13 @@
   </a>
 
   <script>
-    const text = `V době kolem 3500 let před Kristem žili lidé v zemi zvané Sumer. Sumerové vymysleli spoustu důležitých věcí – například první písmo, kterému říkáme klínové - tím se psalo na hliněné tabulky, první školy, kalendáře a zákony.
+    const text = `V roce 64 po Kristu vypukl v Římě velký požár. Část lidí si myslela, že ho způsobil císař Nero. Aby odvrátil vinu, obvinil křesťany a začalo jejich pronásledování.
 
-Postavili velká města jako Ur a Uruk. Vyráběli si cihly, stavěli zikkuraty – vysoké stavby podobné věžím.
+Křesťané byli obviňováni, že nenávidí římský svět, protože věřili v jednoho Boha a neuctívali císaře. Byli zatýkáni, mučeni a popravováni. Mnoho z nich zemřelo s modlitbou a láskou v srdci. Stali se z nich svatí mučedníci.
 
-Zapsali na své hliněné tabulky například i příběh o potopě světa nebo o králi Gilgamešovi.`;
+Jedním z nich byl apoštol Petr, který byl ukřižován hlavou dolů, a apoštol Pavel, který byl sťat. Tito hrdinové věřili, že láska a pravda jsou silnější než násilí.
+
+Dnes si světce a mučedníky připomínáme jako příklady odvahy a věrnosti.`;
 
     const toggleReadButton = document.getElementById('toggleRead');
     const textBox = document.getElementById('textBox');
@@ -87,25 +89,20 @@ Zapsali na své hliněné tabulky například i příběh o potopě světa nebo 
 
     function triggerEmoji(keyword) {
       const emojiMap = {
-        sumer: '🏺',
-        lidé: '🧑',
-        písmo: '📜',
-        škola: '🏫',
-        kalendáře: '📆',
-        zákony: '⚖️',
-        bohy: '🛕',
-        města: '🏙️',
-        cihly: '🧱',
-        zikkuraty: '🗼',
-        tabulky: '📓',
-        obchod: '💰',
-        historie: '📖',
-        příběhy: '📚',
-        potopě: '🌊',
-        gilgameš: '👑',
-        svět: '🌍',
-        tvořiví: '🎨',
-        poznávat: '🔍'
+        Řím: '🇷🇴',
+        požár: '🔥',
+        nero: '🤴',
+        křesťan: '⛪',
+        císař: '👑',
+        mučen: '⚔️',
+        modlitba: '🙏',
+        láska: '❤️',
+        petr: '✊',
+        pavel: '🧡',
+        pravda: '🌟',
+        odvaha: '🏋️',
+        světci: '🌈',
+        bůh: '✡'
       };
       const match = Object.keys(emojiMap).find(key => keyword.toLowerCase().includes(key));
       if (match) {

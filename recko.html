@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Starý Sumer</title>
+  <title>Starověké Řecko</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     #textBox { font-size: 16px; }
@@ -21,13 +21,13 @@
     }
   </style>
 </head>
-<body class="bg-yellow-100 flex flex-col items-center justify-center min-h-screen p-6 relative overflow-hidden">
+<body class="bg-yellow-50 flex flex-col items-center justify-center min-h-screen p-6 relative overflow-hidden">
   <select id="voiceSelect" class="px-4 py-2 rounded-lg border border-gray-300 shadow">
     <option>Načítám hlasy...</option>
   </select>
 
-  <h1 class="text-3xl font-bold mb-4">Starý Sumer</h1>
-  <img id="imageTrigger" src="images/sumer.png" alt="Starý Sumer" class="w-full max-w-md rounded-2xl shadow-lg mb-6 cursor-pointer" />
+  <h1 class="text-3xl font-bold mb-4">Starověké Řecko</h1>
+  <img id="imageTrigger" src="images/recko.png" alt="Řecko" class="w-full max-w-md rounded-2xl shadow-lg mb-6 cursor-pointer" />
   <div id="textBox" class="bg-white p-4 rounded-xl shadow max-w-2xl text-center font-semibold text-gray-800 mb-4 hidden"></div>
   <div class="flex gap-4 mb-4">
     <button id="toggleRead" class="bg-green-600 text-white px-6 py-3 rounded-2xl shadow hover:bg-green-700 transition">
@@ -39,11 +39,11 @@
   </a>
 
   <script>
-    const text = `V době kolem 3500 let před Kristem žili lidé v zemi zvané Sumer. Sumerové vymysleli spoustu důležitých věcí – například první písmo, kterému říkáme klínové - tím se psalo na hliněné tabulky, první školy, kalendáře a zákony.
+    const text = `Mezi lety 800 až 500 před Kristem bylo starověké Řecko plné měst jako Athény, Sparta nebo Delfy. Každé město bylo jako malý stát – městský stát. Lidé zde žili podle vlastních pravidel, měli své vládce, vojáky i slavnosti.
 
-Postavili velká města jako Ur a Uruk. Vyráběli si cihly, stavěli zikkuraty – vysoké stavby podobné věžím.
+V Athénách se zrodila demokracie – způsob vlády, kdy lidé rozhodují společně. Řekové milovali moudrost a zkoumali svět kolem sebe. Těm kdo nejvíce přemýšleli se říkalo filozofové, to byl například Sokrates nebo Platón.
 
-Zapsali na své hliněné tabulky například i příběh o potopě světa nebo o králi Gilgamešovi.`;
+Každé čtyři roky pořádali Řekové olympijské hry, kde sportovci soutěžili v běhu, zápase nebo hodu diskem. I dnes máme olympiádu, která na tyto hry navazuje.`;
 
     const toggleReadButton = document.getElementById('toggleRead');
     const textBox = document.getElementById('textBox');
@@ -87,25 +87,21 @@ Zapsali na své hliněné tabulky například i příběh o potopě světa nebo 
 
     function triggerEmoji(keyword) {
       const emojiMap = {
-        sumer: '🏺',
-        lidé: '🧑',
-        písmo: '📜',
-        škola: '🏫',
-        kalendáře: '📆',
-        zákony: '⚖️',
-        bohy: '🛕',
-        města: '🏙️',
-        cihly: '🧱',
-        zikkuraty: '🗼',
-        tabulky: '📓',
-        obchod: '💰',
-        historie: '📖',
-        příběhy: '📚',
-        potopě: '🌊',
-        gilgameš: '👑',
-        svět: '🌍',
-        tvořiví: '🎨',
-        poznávat: '🔍'
+        řecko: '🏛️',
+        město: '🏘️',
+        athény: '🏛️',
+        sparta: '⚔️',
+        delfy: '🔮',
+        demokracie: '🗳️',
+        filozofové: '🧠',
+        sokrates: '🤔',
+        platón: '📚',
+        olympijské: '🏅',
+        hry: '🎯',
+        běh: '🏃',
+        zápas: '🤼',
+        disk: '🥏',
+        dia: '⚡'
       };
       const match = Object.keys(emojiMap).find(key => keyword.toLowerCase().includes(key));
       if (match) {
