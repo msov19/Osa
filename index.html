@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Historie pro děti – Časová osa</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-yellow-50">
+  <div class="min-h-screen p-6">
+    <h1 class="text-3xl font-bold text-center mb-8">Časová osa</h1>
+    <div id="timeline" class="flex flex-wrap justify-center gap-6"></div>
+  </div>
+
+  <script>
+    const timelineData = [
+      { id: "stvoření", label: "Stvoření světa", image: "images/stvoreni.png" },
+      { id: "adam-eva", label: "Adam a Eva", image: "images/adam-eva.png" },
+      { id: "potopa", label: "Potopa světa", image: "images/potopa.png" },
+      { id: "babel", label: "Babylonská věž", image: "images/babel.png" },
+      { id: "abraham", label: "Praotec Abraham", image: "images/abraham.png" },
+    ];
+
+    const container = document.getElementById("timeline");
+
+    timelineData.forEach((item) => {
+      const card = document.createElement("div");
+      card.className = "cursor-pointer w-40 text-center bg-white rounded-2xl shadow hover:shadow-md transition p-2";
+      card.innerHTML = `
+        <img src="${item.image}" alt="${item.label}" class="w-full h-24 object-cover rounded-xl mb-2" />
+        <div class="text-sm font-semibold text-gray-800">${item.label}</div>
+      `;
+      card.onclick = () => {
+        window.location.href = `scene-${item.id}.html`;
+      };
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
