@@ -31,12 +31,14 @@
         <div class="text-sm font-semibold text-gray-800">${item.label}</div>
       `;
       card.onclick = () => {
-        const slug = item.id
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .replace(/\s+/g, '-')
-          .toLowerCase();
-        window.location.href = `scene-${slug}.html`;
+        const target = item.link || `scene-${
+          item.id
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/\s+/g, '-')
+            .toLowerCase()
+        }.html`;
+        window.location.href = target;
       };
       container.appendChild(card);
     });
