@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stvoření světa</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-blue-100 flex flex-col items-center justify-center min-h-screen p-6">
+  <h1 class="text-3xl font-bold mb-4">Stvoření světa</h1>
+  <img src="images/stvoreni.png" alt="Stvoření světa" class="w-full max-w-md rounded-2xl shadow-lg mb-6" />
+  <button id="play" class="bg-green-600 text-white px-6 py-3 rounded-2xl shadow hover:bg-green-700 transition">
+    Klikni a poslechni si příběh
+  </button>
+
+  <script>
+    const text = `Na začátku nebylo nic – žádná Země, žádné Slunce, žádní lidé ani zvířata. Ale pak začal velký příběh. Bůh řekl: „Ať je světlo!“ A opravdu – najednou bylo světlo a tma, den a noc. Tak začalo tvoření světa.
+
+Vědci říkají, že svět začal velkým třeskem – obrovskou událostí, ze které vznikly hvězdy, planety a nakonec i naše Země. A víš co? V tom vidíme krásu – že za tím vším je moudrost a láska. Bůh tvořil svět s péčí – udělal hory, řeky, ptáky, stromy i zvířátka. Nakonec stvořil člověka, aby o svět pečoval.
+
+Když se podíváš na nebe, květiny nebo třeba kočku – můžeš si říct: „To všechno je dar.“ A tak začal náš domov – svět, o který se máme starat.`;
+
+    const button = document.getElementById('play');
+    let isPlaying = false;
+
+    button.addEventListener('click', () => {
+      if (isPlaying) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'cs-CZ';
+      utterance.rate = 0.95;
+      isPlaying = true;
+      button.textContent = 'Poslouchej...';
+      utterance.onend = () => {
+        isPlaying = false;
+        button.textContent = 'Klikni a poslechni si příběh';
+      };
+      window.speechSynthesis.speak(utterance);
+    });
+  </script>
+</body>
+</html>
