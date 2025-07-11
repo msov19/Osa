@@ -31,7 +31,12 @@
         <div class="text-sm font-semibold text-gray-800">${item.label}</div>
       `;
       card.onclick = () => {
-        window.location.href = `scene-${item.id}.html`;
+        const slug = item.id
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/\s+/g, '-')
+          .toLowerCase();
+        window.location.href = `scene-${slug}.html`;
       };
       container.appendChild(card);
     });
