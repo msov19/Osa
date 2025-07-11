@@ -3,17 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stvoření světa</title>
+  <title>Adam a Eva</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    #textBox {
-      font-size: 16px;
-    }
-    #voiceSelect {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-    }
+    #textBox { font-size: 16px; }
+    #voiceSelect { position: absolute; top: 1rem; right: 1rem; }
     .emoji-effect {
       position: fixed;
       font-size: 48px;
@@ -22,14 +16,8 @@
       z-index: 0;
     }
     @keyframes floatUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(-80px);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(-80px); }
     }
   </style>
 </head>
@@ -38,8 +26,8 @@
     <option>Načítám hlasy...</option>
   </select>
 
-  <h1 class="text-3xl font-bold mb-4">Stvoření světa</h1>
-  <img id="imageTrigger" src="images/stvoreni.png" alt="Stvoření světa" class="w-full max-w-md rounded-2xl shadow-lg mb-6 cursor-pointer" />
+  <h1 class="text-3xl font-bold mb-4">Adam a Eva</h1>
+  <img id="imageTrigger" src="images/adam-eva.png" alt="Adam a Eva" class="w-full max-w-md rounded-2xl shadow-lg mb-6 cursor-pointer" />
   <div id="textBox" class="bg-white p-4 rounded-xl shadow max-w-2xl text-center font-semibold text-gray-800 mb-4 hidden"></div>
   <div class="flex gap-4 mb-4">
     <button id="toggleRead" class="bg-green-600 text-white px-6 py-3 rounded-2xl shadow hover:bg-green-700 transition">
@@ -51,11 +39,11 @@
   </a>
 
   <script>
-    const text = `Na začátku nebylo nic – žádná Země, žádné Slunce, žádní lidé ani zvířata. Jen Bůh. Ale pak začal velký příběh. Bůh řekl: „Ať je světlo!“ A opravdu – najednou bylo světlo a tma, den a noc. Tak začalo tvoření světa.
+    const text = `Bůh stvořil člověka – nejprve Adama a pak Evu – aby spolu žili v krásné zahradě jménem Eden. Byli prvními lidmi a žili šťastně, měli se rádi a nic jim nechybělo. Měli pečovat o zahradu a o všechna zvířata kolem. Bůh jim řekl, že mohou jíst ze všech stromů, kromě jednoho – stromu poznání dobra a zla.
 
-Vědci říkají, že svět začal velkým třeskem – obrovskou událostí, ze které vznikly hvězdy, planety a nakonec i naše Země a že to bylo před miliardami let. V Bibli se píše, že jeden den je u Boha jako tisíc let. Miliarda roků je pro něj jako pro nás den. Je větší než cokoliv si umíme představit, věčný a každého má rád. Bůh tvořil svět s péčí – udělal hory, řeky, ptáky, stromy i zvířátka. Nakonec stvořil člověka, ke svému obrazu, sobě podobného, jako vrchol stvoření - aby o svět pečoval.
+Vědci říkají, že první člověk se vyvinul z opice nebo podobných tvorů. To znamená, že jsme spojeni se zvířaty a přírodou, jim podobni, ale nejsme jako oni. Člověk má nesmrtelnou duši, umí milovat, tvořit, odpouštět – a to je něco výjimečného.
 
-Když se podíváš na nebe, květiny nebo třeba kočku – můžeš si říct: „To všechno je dar.“ Takto vznikl náš domov – svět.`;
+Adam a Eva byli první, kdo mohli volit mezi dobrem a zlem. A i když udělali chybu, Bůh je neopustil – stejně jako nikdy neopustí nás. Jsme stvořeni k obrazu Božímu, každý jsme jedinečný a máme ve světě svoje speciální místo.`;
 
     const toggleReadButton = document.getElementById('toggleRead');
     const textBox = document.getElementById('textBox');
@@ -74,15 +62,13 @@ Když se podíváš na nebe, květiny nebo třeba kočku – můžeš si říct:
     function populateVoices() {
       const voices = window.speechSynthesis.getVoices();
       voiceSelect.innerHTML = '';
-      voices
-        .filter(voice => voice.lang.startsWith('cs'))
-        .forEach((voice, index) => {
-          const option = document.createElement('option');
-          option.value = index;
-          option.textContent = `${voice.name} (${voice.lang})`;
-          if (index === selectedVoiceIndex) option.selected = true;
-          voiceSelect.appendChild(option);
-        });
+      voices.filter(voice => voice.lang.startsWith('cs')).forEach((voice, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        if (index === selectedVoiceIndex) option.selected = true;
+        voiceSelect.appendChild(option);
+      });
     }
 
     voiceSelect.addEventListener('change', () => {
@@ -101,28 +87,23 @@ Když se podíváš na nebe, květiny nebo třeba kočku – můžeš si říct:
 
     function triggerEmoji(keyword) {
       const emojiMap = {
-        slunce: '☀️',
-        hvězdy: '🌟',
+        adam: '👨',
+        eva: '👩',
+        zahrada: '🌳',
+        eden: '🌿',
+        strom: '🌴',
         zvířata: '🐾',
-        člověka: '🧍',
-        hory: '⛰️',
-        řeky: '🌊',
-        květiny: '🌸',
-        kočku: '🐱',
-        ptáky: '🐦',
-        světlo: '💡',
-        nebe: '☁️',
-        dar: '🎁',
+        tvorů: '🦍',
+        přírodu: '🍃',
+        duši: '💫',
         bůh: '✨',
-        vesmír: '🌌',
-        stromy: '🌳',
-        planety: '🪐',
-        den: '🌞',
-        noc: '🌙',
-        země: '🌍',
         láska: '❤️',
-        příběh: '📖',
-        člověk: '🧒'
+        dobro: '👍',
+        zlo: '👎',
+        obraz: '🖼️',
+        místo: '📍',
+        člověk: '🧒',
+        chyba: '⚠️'
       };
       const match = Object.keys(emojiMap).find(key => keyword.toLowerCase().includes(key));
       if (match) {
@@ -154,7 +135,6 @@ Když se podíváš na nebe, květiny nebo třeba kočku – můžeš si říct:
         if (event.name === 'word') {
           const charIndex = event.charIndex;
           let accumulated = 0;
-
           for (let i = 0; i < sentenceList.length; i++) {
             accumulated += sentenceList[i].length;
             if (accumulated >= charIndex) {
