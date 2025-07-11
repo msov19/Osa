@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1348 – Karlova univerzita</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    #textBox { font-size: 16px; }
+    #voiceSelect { position: absolute; top: 1rem; right: 1rem; }
+    .emoji-effect {
+      position: fixed;
+      font-size: 48px;
+      animation: floatUp 2s ease-out forwards;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(-80px); }
+    }
+  </style>
+</head>
+<body class="bg-yellow-50 flex flex-col items-center justify-center min-h-screen p-6 relative overflow-hidden">
+  <select id="voiceSelect" class="px-4 py-2 rounded-lg border border-gray-300 shadow">
+    <option>Načítám hlasy...</option>
+  </select>
+
+  <h1 class="text-3xl font-bold mb-4">1348 – Karlova univerzita</h1>
+  <img id="imageTrigger" src="images/1348.png" alt="Karlova univerzita" class="w-full max-w-md rounded-2xl shadow-lg mb-6 cursor-pointer" />
+  <div id="textBox" class="bg-white p-4 rounded-xl shadow max-w-2xl text-center font-semibold text-gray-800 mb-4 hidden"></div>
+  <div class="flex gap-4 mb-4">
+    <button id="toggleRead" class="bg-green-600 text-white px-6 py-3 rounded-2xl shadow hover:bg-green-700 transition">
+      ▶️ Spustit čtení
+    </button>
+  </div>
+  <a href="index.html" class="bg-red-600 text-white px-8 py-4 rounded-2xl shadow hover:bg-red-700 transition text-xl font-bold">
+    ← Zpět na časovou osu
+  </a>
+
+  <script>
+    const text = `V roce 1348 založil český král a císař Karel Čtvrtý první univerzitu na sever od Alp – Karlovu univerzitu v Praze.
+
+Byla to škola, kde se lidé učili o víře, přírodě, hvězdách, zákonech i řeči. Studenti byli z Čech i z jiných zemí. Karel Čtvrtý chtěl, aby Češi byli vzdělaní a mohli pomáhat svému království.
+
+Univerzita byla jako maják moudrosti – učitelé předávali znalosti dál, studenti se učili a rostli nejen věděním, ale i vírou. Karel Čtvrtý věděl, že pravá síla národa je ve vzdělání.
+
+A tak i dnes stojí v Praze Karlova univerzita, kam chodí studenti, aby poznali svět a byli moudrými lidmi.`;
+
+    const toggleReadButton = document.getElementById('toggleRead');
+    const textBox = document.getElementById('textBox');
+    const voiceSelect = document.getElementById('voiceSelect');
+    const imageTrigger = document.getElementById('imageTrigger');
+    let utterance;
+    let isPlaying = false;
+    let sentenceList = [];
+    let selectedVoiceIndex = 0;
+    let paused = false;
+
+    function splitIntoSentences(text) {
+      return text.match(/[^.!?]+[.!?]+/g) || [text];
+    }
+
+    function populateVoices() {
+      const voices = window.speechSynthesis.getVoices();
+      voiceSelect.innerHTML = '';
+      voices.filter(voice => voice.lang.startsWith('cs')).forEach((voice, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        if (index === selectedVoiceIndex) option.selected = true;
+        voiceSelect.appendChild(option);
+      });
+    }
+
+    voiceSelect.addEventListener('change', () => {
+      selectedVoiceIndex = parseInt(voiceSelect.value);
+      if (isPlaying) {
+        window.speechSynthesis.cancel();
+        isPlaying = false;
+        textBox.innerHTML = '';
+        textBox.classList.add('hidden');
+        startReading();
+      }
+    });
+
+    window.speechSynthesis.onvoiceschanged = populateVoices;
+    populateVoices();
+
+    function triggerEmoji(keyword) {
+      const emojiMap = {
+        král: '🤴',
+        císař: '👑',
+        univerzita: '🎓',
+        škola: '🏫',
+        studenti: '🧑‍🎓',
+        víra: '🙏',
+        zákon: '⚖️',
+        moudrost: '🧠',
+        hvězdy: '✨',
+        věda: '🔬',
+        národ: '🇨🇿',
+        Karel: '👑'
+      };
+      const match = Object.keys(emojiMap).find(key => keyword.toLowerCase().includes(key));
+      if (match) {
+        const emoji = emojiMap[match];
+        const el = document.createElement('div');
+        el.textContent = emoji;
+        el.className = 'emoji-effect';
+        el.style.left = `${Math.random() * 80 + 10}%`;
+        el.style.bottom = '20px';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 2000);
+      }
+    }
+
+    function startReading() {
+      const voices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('cs'));
+      sentenceList = splitIntoSentences(text);
+      let sentenceIndex = 0;
+
+      function speakNextSentence() {
+        if (sentenceIndex >= sentenceList.length) {
+          isPlaying = false;
+          toggleReadButton.textContent = '▶️ Spustit čtení';
+          textBox.innerHTML = '';
+          textBox.classList.add('hidden');
+          return;
+        }
+
+        const currentSentence = sentenceList[sentenceIndex].trim();
+        textBox.innerHTML = currentSentence;
+        triggerEmoji(currentSentence);
+
+        utterance = new SpeechSynthesisUtterance(currentSentence);
+        utterance.voice = voices[selectedVoiceIndex] || null;
+        utterance.lang = 'cs-CZ';
+        utterance.rate = 0.95;
+
+        utterance.onend = () => {
+          sentenceIndex++;
+          if (!paused) speakNextSentence();
+        };
+
+        window.speechSynthesis.speak(utterance);
+      }
+
+      isPlaying = true;
+      paused = false;
+      textBox.classList.remove('hidden');
+      toggleReadButton.textContent = '⏸️ Pauza';
+      speakNextSentence();
+    }
+
+    toggleReadButton.addEventListener('click', () => {
+      if (!isPlaying) {
+        startReading();
+      } else if (!paused) {
+        window.speechSynthesis.pause();
+        paused = true;
+        toggleReadButton.textContent = '▶️ Pokračovat';
+      } else {
+        window.speechSynthesis.resume();
+        paused = false;
+        toggleReadButton.textContent = '⏸️ Pauza';
+      }
+    });
+
+    imageTrigger.addEventListener('click', () => {
+      if (!isPlaying) {
+        startReading();
+      }
+    });
+  </script>
+</body>
+</html>
